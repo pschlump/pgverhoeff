@@ -1,0 +1,9 @@
+
+use verhoeff::VerhoeffMut;
+let mut digits = String::from("12345");
+digits.push_verhoeff_check_digit();
+assert_eq!(digits, "123451");
+
+
+-- Add append_verhoeff_check_digit ( ... )
+

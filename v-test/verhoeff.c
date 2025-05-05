@@ -42,8 +42,17 @@ int generate_verhoeff(const char* num) {
 	return verhoeff_inv[c] + '0';
 }
 
+// -- Add append_verhoeff_check_digit ( ... )
+// append_verhoeff_check_digit will modify the string 'num' to append the check digit.  'num' must be large enough to append a character.
+void append_generate_verhoeff(char* num) {
+	int len = strlen(num);
+	char c = generate_verhoeff(num);
+	num[len] = c;
+	num[len+1] = '\0';
+}
+
 // validate_verhoeff will return true if the check digit is valid for the numeric string.	The check digit must be at the end.
-int validate_verhoeff(const char*	num) {
+int validate_verhoeff(const char* num) {
 	int c = 0;
 	int len = strlen(num);
 
@@ -53,3 +62,25 @@ int validate_verhoeff(const char*	num) {
 
 	return (c == 0);
 }
+
+// validate_verhoeff will return true if the check digit is valid for the numeric string.	The check digit must be at the end.
+int validate_verhoeff_len(const char* num, int len) {
+	int c = 0;
+	for (int i = 0; i < len; i++) {
+		c = verhoeff_d[c][verhoeff_p[(i % 8)][num[len - i - 1] - '0']];
+	}
+	return (c == 0);
+}
+
+
+// append_verhoeff_check_char will take a string, 'str' of digits and modify it to have a verhoeff check digit at the end.
+// 'str' must have sufficient storage to store the additional character.
+void append_verhoeff_check_char(char* str, int *ln) {
+	int c = 0, len = *ln;
+	for(int i = 0; i < len; i++) {
+		c = verhoeff_d[c][verhoeff_p[((i + 1) % 8)][str[len - i - 1] - '0']];
+	}
+	str[len] verhoeff_inv[c] + '0';
+	(*ln)++
+}
+
