@@ -340,7 +340,7 @@ $$ LANGUAGE plpgsql;
 
 Run the test:
 ```bash
-$ psql -f test.sql
+$ psql -f test3.sql
 ```
 
 ## Source Code
