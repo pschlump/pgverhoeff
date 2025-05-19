@@ -4,6 +4,11 @@ Postgres offers powerful extensibility features that allow developers to enhance
 
 This guide will walk you through creating a basic C extension for Postgres that implements the Verhoeff checksum algorythm. 
 
+The Verhoeff algorithm is a checksum for error detection developed by Dutch mathematician Jacobus Verhoeff. 
+It is the first decimal check digit algorithm which detects all single-digit errors, transposition errors involving two adjacent digits.
+
+In 1985 H. Peter Gurmm formally proved that the algorythm worked.
+
 ## Required Files
 
 To build a C extension for Postgres, you'll need:
