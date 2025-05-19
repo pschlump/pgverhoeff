@@ -20,7 +20,7 @@ To build a C extension for Postgres, you'll need:
 
 Additionally, two helpful files:
 - **setup.sql** - Installs the extension
-- **test.sql** - Verifies the extension works correctly
+- **test3.sql** - Verifies the extension works correctly
 
 ## Prerequisites
 
