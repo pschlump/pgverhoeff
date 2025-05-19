@@ -1,7 +1,6 @@
 
 -- A full block of tests that results in 'pass'/'fail' 
 
-
 DO $$
 DECLARE
  	l_txt text;
@@ -33,16 +32,11 @@ BEGIN
 	end if;
 
 	if n_err = 0 then
-
 		RAISE NOTICE 'PASS';
-
 	else 
-
 		RAISE NOTICE 'FAIL';
-
 	end if;
 
 END;
 $$ LANGUAGE plpgsql;
-
 

@@ -96,7 +96,6 @@ append_verhoeff_check_digit(PG_FUNCTION_ARGS)
 	PG_RETURN_TEXT_P(new_text);
 }
 
-// xyzzy - TODO - add validator -> bool
 PG_FUNCTION_INFO_V1(validate_verhoeff_check_digit);
 
 Datum
@@ -108,22 +107,3 @@ validate_verhoeff_check_digit(PG_FUNCTION_ARGS)
     PG_RETURN_BOOL(valid);
 }
 
-/*
-PG_FUNCTION_INFO_V1(concat_text);
-
-Datum
-concat_text(PG_FUNCTION_ARGS)
-{
-    text  *arg1 = PG_GETARG_TEXT_PP(0);
-    text  *arg2 = PG_GETARG_TEXT_PP(1);
-    int32 arg1_size = VARSIZE_ANY_EXHDR(arg1);
-    int32 arg2_size = VARSIZE_ANY_EXHDR(arg2);
-    int32 new_text_size = arg1_size + arg2_size + VARHDRSZ;
-    text *new_text = (text *) palloc(new_text_size);
-
-    SET_VARSIZE(new_text, new_text_size);
-    memcpy(VARDATA(new_text), VARDATA_ANY(arg1), arg1_size);
-    memcpy(VARDATA(new_text) + arg1_size, VARDATA_ANY(arg2), arg2_size);
-    PG_RETURN_TEXT_P(new_text);
-}
-*/
