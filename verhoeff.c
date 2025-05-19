@@ -47,20 +47,32 @@ static int verhoeff_inv[] = {0, 4, 3, 2, 1, 5, 6, 7, 8, 9};
 static int validate_verhoeff_len(const char *num, int len) {
 	int c = 0;
 	for (int i = 0; i < len; i++) {
-		c = verhoeff_d[c][verhoeff_p[(i % 8)][num[len - i - 1] - '0']];
+		if ( num[len-i-1] >= '0' &&  num[len-i-1] <= '9' ) {
+			c = verhoeff_d[c][verhoeff_p[(i % 8)][num[len - i - 1] - '0']];
+		} else {
+			c = 1;		// Invalid non-digit in stirng, fail string
+			break;
+		}
 	}
 	return (c == 0);
 }
 
 // append_verhoeff_check_char will take a string, 'str' of digits and modify it to have a verhoeff check digit at the end.
 // 'str' must have sufficient storage to store the additional character.
-static void append_verhoeff_check_char(char* str, int *ln) {
+static int append_verhoeff_check_char(char* str, int *ln) {
 	int c = 0, len = *ln;
 	for(int i = 0; i < len; i++) {
-		c = verhoeff_d[c][verhoeff_p[((i + 1) % 8)][str[len - i - 1] - '0']];
+		if ( str[len-i-1] >= '0' &&  str[len-i-1] <= '9' ) {
+			c = verhoeff_d[c][verhoeff_p[((i + 1) % 8)][str[len - i - 1] - '0']];
+		} else {
+			str[len] = '!';
+			(*ln)++;
+			return 0;	// Return error, invalic char in string.
+		}
 	}
 	str[len] = verhoeff_inv[c] + '0';
 	(*ln)++;
+	return 1; // Return success
 }
 
 
@@ -79,11 +91,9 @@ append_verhoeff_check_digit(PG_FUNCTION_ARGS)
     SET_VARSIZE(new_text, new_text_size);
     memcpy(VARDATA(new_text), VARDATA_ANY(arg1), arg1_size);
 
-	//	to_title_case(VARDATA(new_text), arg1_size);
-	// void append_verhoeff_check_char(char* str, int *ln) {
 	append_verhoeff_check_char(VARDATA(new_text), &arg1_size);
 
-    PG_RETURN_TEXT_P(new_text);
+	PG_RETURN_TEXT_P(new_text);
 }
 
 // xyzzy - TODO - add validator -> bool
